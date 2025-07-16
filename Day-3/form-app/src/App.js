@@ -3,6 +3,8 @@ import Home from "./Home";
 import About from "./About";
 import Contact from "./Contact";
 import Login from "./Login";
+import User from "./User";
+import UserList from "./UserList";
 import './App.css';
 
 function App() {
@@ -13,6 +15,9 @@ function App() {
         <Link to="/about">About</Link>
         <Link to="/contact">Contact</Link>
         <Link to="/login">Login</Link>
+        <Link to="/user/101">User 101</Link>
+        <Link to="/user/102">User 102</Link>
+        <Link to="/users">Users</Link>
       </nav>
 
       <Routes>
@@ -20,6 +25,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/user/:id" element={<User />} />
+        <Route path="/users" element={<UserList/>}/>
       </Routes>
     </Router>
   );

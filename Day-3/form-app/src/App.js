@@ -5,6 +5,8 @@ import Contact from "./Contact";
 import Login from "./Login";
 import User from "./User";
 import UserList from "./UserList";
+import UserFetch from "./UserFetch";
+import UserDetail from "./UserDetail";
 import './App.css';
 
 function App() {
@@ -18,6 +20,7 @@ function App() {
         <Link to="/user/101">User 101</Link>
         <Link to="/user/102">User 102</Link>
         <Link to="/users">Users</Link>
+        <Link to="/user-api">User API</Link>
       </nav>
 
       <Routes>
@@ -27,6 +30,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/user/:id" element={<User />} />
         <Route path="/users" element={<UserList/>}/>
+        <Route path="/user-api" element={<UserFetch/>}/>
+        <Route path="/user/:id" element={<UserDetail />} />
       </Routes>
     </Router>
   );

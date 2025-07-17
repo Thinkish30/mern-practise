@@ -22,7 +22,7 @@ function UserList() {
               color: "white",
               textDecoration: "none",
               borderRadius: "4px",
-            }}
+            }} 
           >
             View Details
           </Link>

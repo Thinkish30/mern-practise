@@ -32,7 +32,7 @@ function App() {
         <Route path="/users" element={<UserList/>}/>
         <Route path="/user-api" element={<UserFetch/>}/>
         <Route path="/user/:id" element={<UserDetail />} />
-      </Routes>
+      </Routes>  
     </Router>
   );
 }

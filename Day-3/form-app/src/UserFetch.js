@@ -66,7 +66,7 @@ function UserFetch() {
         onChange={(e) => setSearchTerm(e.target.value)}
         style={{
           padding: "8px",
-          width: "80%",
+          width: "80%", 
           margin: "10px auto",
           display: "block",
         }}

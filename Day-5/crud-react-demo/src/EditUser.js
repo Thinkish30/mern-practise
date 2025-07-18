@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function EditUser() {
-  const { id } = useParams();
+  const { id } = useParams(); // user ID from URL
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -10,16 +11,29 @@ function EditUser() {
     email: "",
   });
 
+  // 🔁 Get user data on load
   useEffect(() => {
-    // Static dummy data – actual project me real data fetch karna hoga
-    const dummyUser = { name: "Dummy Name", email: "dummy@email.com" };
-    setFormData(dummyUser);
+    axios.get(`http://localhost:5000/users/${id}`)
+      .then((res) => {
+        setFormData(res.data);
+      })
+      .catch((err) => {
+        console.error("Error fetching user:", err);
+      });
   }, [id]);
 
+  // ✅ Handle Update (PUT)
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Updated User:", formData);
-    navigate("/");
+
+    axios.put(`http://localhost:5000/users/${id}`, formData)
+      .then(() => {
+        alert("User updated successfully!");
+        navigate("/");
+      })
+      .catch((err) => {
+        console.error("Error updating user:", err);
+      });
   };
 
   return (

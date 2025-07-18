@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function AddUser() {
   const navigate = useNavigate();
@@ -10,8 +11,16 @@ function AddUser() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("New User:", formData);
-    navigate("/");
+
+    // Axios POST request to backend
+    axios.post("http://localhost:5000/users", formData)
+      .then(() => {
+        alert("User added successfully!");
+        navigate("/"); // go back to user list
+      })
+      .catch((err) => {
+        console.error("Error adding user:", err);
+      });
   };
 
   return (
@@ -40,7 +49,7 @@ function AddUser() {
             required
           />
         </div>
-        <button type="submit">Save</button>
+        <button type="submit">Add User</button>
       </form>
     </div>
   );

@@ -1,17 +1,21 @@
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import UserList from "./UserList";
-import AddUser from "./AddUser";
-import EditUser from "./EditUser";
+import UserList from "./components/UserList";
+import AddUser from "./components/AddUser";
+import EditUser from "./components/EditUser";
+import { UserProvider } from "./contexts/UserContext";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<UserList />} />
-        <Route path="/add" element={<AddUser />} />
-        <Route path="/edit/:id" element={<EditUser />} />
-      </Routes>
-    </BrowserRouter>
+    <UserProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<UserList />} />
+          <Route path="/add" element={<AddUser />} />
+          <Route path="/edit/:id" element={<EditUser />} />
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
   );
 }
 

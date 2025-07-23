@@ -1,44 +1,33 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserContext } from "../contexts/UserContext";
 
-function EditUser() {
-  const { id } = useParams(); // user ID from URL
+function AddUser() {
   const navigate = useNavigate();
+  const { users, setUsers } = useContext(UserContext);
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
   });
 
-  // 🔁 Get user data on load
-  useEffect(() => {
-    axios.get(`http://localhost:5000/users/${id}`)
-      .then((res) => {
-        setFormData(res.data);
-      })
-      .catch((err) => {
-        console.error("Error fetching user:", err);
-      });
-  }, [id]);
-
-  // ✅ Handle Update (PUT)
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.put(`http://localhost:5000/users/${id}`, formData)
-      .then(() => {
-        alert("User updated successfully!");
+    axios.post("http://localhost:5000/users", formData)
+      .then((res) => {
+        // Add new user to context
+        setUsers([...users, res.data]);
+        alert("User added successfully!");
         navigate("/");
       })
-      .catch((err) => {
-        console.error("Error updating user:", err);
-      });
+      .catch((err) => console.error("Error adding user:", err));
   };
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2>✏️ Edit User</h2>
+      <h2>➕ Add New User</h2>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: "10px" }}>
           <label>Name:</label><br />
@@ -62,10 +51,10 @@ function EditUser() {
             required
           />
         </div>
-        <button type="submit">Update</button>
+        <button type="submit">Add User</button>
       </form>
     </div>
   );
 }
 
-export default EditUser;
+export default AddUser;

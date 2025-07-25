@@ -7,28 +7,39 @@ function AddUser() {
   const navigate = useNavigate();
   const { users, setUsers } = useContext(UserContext);
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-  });
+  const [formData, setFormData] = useState({ name: "", email: "" });
+  const [errors, setErrors] = useState({});  // 💡 Validation errors
+
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Invalid email format";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!validate()) return;
 
     axios.post("http://localhost:5000/users", formData)
       .then((res) => {
-        // Add new user to context
         setUsers([...users, res.data]);
         alert("User added successfully!");
         navigate("/");
-      })
-      .catch((err) => console.error("Error adding user:", err));
+      });
   };
 
   return (
     <div style={{ padding: "20px" }}>
       <h2>➕ Add New User</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} noValidate>
         <div style={{ marginBottom: "10px" }}>
           <label>Name:</label><br />
           <input
@@ -37,9 +48,12 @@ function AddUser() {
             onChange={(e) =>
               setFormData({ ...formData, name: e.target.value })
             }
-            required
           />
+          {errors.name && (
+            <div style={{ color: "red", fontSize: "12px" }}>{errors.name}</div>
+          )}
         </div>
+
         <div style={{ marginBottom: "10px" }}>
           <label>Email:</label><br />
           <input
@@ -48,9 +62,12 @@ function AddUser() {
             onChange={(e) =>
               setFormData({ ...formData, email: e.target.value })
             }
-            required
           />
+          {errors.email && (
+            <div style={{ color: "red", fontSize: "12px" }}>{errors.email}</div>
+          )}
         </div>
+
         <button type="submit">Add User</button>
       </form>
     </div>

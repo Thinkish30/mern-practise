@@ -8,7 +8,7 @@ function AddUser() {
   const { users, setUsers } = useContext(UserContext);
 
   const [formData, setFormData] = useState({ name: "", email: "" });
-  const [errors, setErrors] = useState({});  // 💡 Validation errors
+  const [errors, setErrors] = useState({}); // 💡 Validation errors
 
   const validate = () => {
     const newErrors = {};
@@ -28,26 +28,33 @@ function AddUser() {
     e.preventDefault();
     if (!validate()) return;
 
-    axios.post("http://localhost:5000/users", formData)
-      .then((res) => {
-        setUsers([...users, res.data]);
-        alert("User added successfully!");
-        navigate("/");
-      });
+    axios.post("http://localhost:5000/users", formData).then((res) => {
+      setUsers([...users, res.data]);
+      alert("User added successfully!");
+      navigate("/");
+    });
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div
+      style={{
+        padding: "10px 20px",
+        backgroundColor: "#1976d2",
+        color: "white",
+        border: "none",
+        borderRadius: "4px",
+        cursor: "pointer",
+      }}
+    >
       <h2>➕ Add New User</h2>
       <form onSubmit={handleSubmit} noValidate>
         <div style={{ marginBottom: "10px" }}>
-          <label>Name:</label><br />
+          <label>Name:</label>
+          <br />
           <input
             type="text"
             value={formData.name}
-            onChange={(e) =>
-              setFormData({ ...formData, name: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
           {errors.name && (
             <div style={{ color: "red", fontSize: "12px" }}>{errors.name}</div>
@@ -55,7 +62,8 @@ function AddUser() {
         </div>
 
         <div style={{ marginBottom: "10px" }}>
-          <label>Email:</label><br />
+          <label>Email:</label>
+          <br />
           <input
             type="email"
             value={formData.email}

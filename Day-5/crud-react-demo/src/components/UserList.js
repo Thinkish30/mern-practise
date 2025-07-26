@@ -21,8 +21,32 @@ function UserList() {
   );
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div
+      style={{
+        padding: "10px 20px",
+        backgroundColor: "#1976d2",
+        color: "white",
+        border: "none",
+        borderRadius: "4px",
+        cursor: "pointer",
+      }}
+    >
       <h2>👤 User List</h2>
+
+      <Link
+        to="/add"
+        style={{
+          display: "inline-block",
+          marginBottom: "20px",
+          padding: "10px 20px",
+          backgroundColor: "#4CAF50",
+          color: "white",
+          textDecoration: "none",
+          borderRadius: "4px",
+        }}
+      >
+        ➕ Add User
+      </Link>
 
       {/* 🔍 Search Box */}
       <input
@@ -40,26 +64,48 @@ function UserList() {
 
       {/* 🔁 Filtered List */}
       {filteredUsers.map((user) => (
-        <div key={user.id} style={{ marginBottom: "15px", padding: "10px", border: "1px solid #ccc" }}>
+        <div
+          key={user.id}
+          style={{
+            marginBottom: "15px",
+            padding: "10px",
+            border: "1px solid #ccc",
+          }}
+        >
           <h3>{user.name}</h3>
           <p>{user.email}</p>
 
           <Link
             to={`/edit/${user.id}`}
-            style={{ marginRight: "10px" }}
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#ffffffff",
+              color: "black",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+            }}
           >
             Edit
           </Link>
 
-          <button onClick={() => handleDelete(user.id)}>
+          <button
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#000000ff",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+            }}
+            onClick={() => handleDelete(user.id)}
+          >
             Delete
           </button>
         </div>
       ))}
 
-      {filteredUsers.length === 0 && (
-        <p>No users found for "{searchTerm}"</p>
-      )}
+      {filteredUsers.length === 0 && <p>No users found for "{searchTerm}"</p>}
     </div>
   );
 }
